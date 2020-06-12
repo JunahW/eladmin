@@ -12,23 +12,45 @@
         </encoder>
     </appender>
 
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--定义日志输出的路径-->
+        <file>./logs/console.log</file>
+        <!--定义日志滚动的策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--定义文件滚动时的文件名的格式-->
+            <fileNamePattern>./logs/console.log.%d{yyyy-MM-dd}
+            </fileNamePattern>
+            <!--60天的时间周期-->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <!--定义输出格式-->
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>${log.charset}</charset>
+        </encoder>
+    </appender>
+
     <!--普通日志输出到控制台-->
     <root level="info">
         <appender-ref ref="console" />
+        <appender-ref ref="file"/>
     </root>
 
     <!--监控sql日志输出 -->
     <logger name="jdbc.sqlonly" level="INFO" additivity="false">
         <appender-ref ref="console" />
+        <appender-ref ref="file"/>
     </logger>
 
     <logger name="jdbc.resultset" level="ERROR" additivity="false">
         <appender-ref ref="console" />
+        <appender-ref ref="file"/>
     </logger>
 
     <!--  如想看到表格数据，将OFF改为INFO  -->
     <logger name="jdbc.resultsettable" level="OFF" additivity="false">
         <appender-ref ref="console" />
+        <appender-ref ref="file"/>
     </logger>
 
     <logger name="jdbc.connection" level="OFF" additivity="false">
@@ -37,9 +59,11 @@
 
     <logger name="jdbc.sqltiming" level="OFF" additivity="false">
         <appender-ref ref="console" />
+        <appender-ref ref="file"/>
     </logger>
 
     <logger name="jdbc.audit" level="OFF" additivity="false">
         <appender-ref ref="console" />
+        <appender-ref ref="file"/>
     </logger>
 </configuration>
